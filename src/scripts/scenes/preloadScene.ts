@@ -1,3 +1,6 @@
+//import * as fs from "fs";
+import * as THREE from "three";
+
 export default class PreloadScene extends Phaser.Scene 
 {
 	constructor() 
@@ -7,11 +10,23 @@ export default class PreloadScene extends Phaser.Scene
 
 	preload() : void
 	{
+		this.load.text("cobbleVertShader", "assets/shaders/cobble-mesh.vs");
+		this.load.text("cobbleFragShader", "assets/shaders/cobble-mesh.fs");
+		
 		return;
 	}
 
 	create() : void
 	{
+		const cobbleUniforms = {
+			map: { value: null }
+		};
+		global.cobbleMaterial = new THREE.ShaderMaterial({
+			uniforms: cobbleUniforms,
+			vertexShader: this.cache.text.get("cobbleVertShader"),
+			fragmentShader: this.cache.text.get("cobbleFragShader"),
+			side: THREE.FrontSide,
+		});
 		this.scene.start("MainScene");
 
 		/**
