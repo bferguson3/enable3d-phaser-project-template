@@ -12,7 +12,7 @@ export default class PreloadScene extends Phaser.Scene
 	{
 		this.load.text("cobbleVertShader", "assets/shaders/cobble-mesh.vs");
 		this.load.text("cobbleFragShader", "assets/shaders/cobble-mesh.fs");
-		
+		this.load.text("cobbleSpriteShader", "assets/shaders/cobble-sprite.vs");
 		return;
 	}
 
@@ -21,12 +21,21 @@ export default class PreloadScene extends Phaser.Scene
 		const cobbleUniforms = {
 			map: { value: null }
 		};
-		global.cobbleMaterial = new THREE.ShaderMaterial({
+		global.cobbleMeshMaterial = new THREE.ShaderMaterial({
 			uniforms: cobbleUniforms,
 			vertexShader: this.cache.text.get("cobbleVertShader"),
 			fragmentShader: this.cache.text.get("cobbleFragShader"),
 			side: THREE.FrontSide,
 		});
+		
+		global.cobbleSpriteMaterial = new THREE.ShaderMaterial({
+			uniforms: cobbleUniforms,
+			vertexShader: this.cache.text.get("cobbleSpriteShader"),
+			fragmentShader: this.cache.text.get("cobbleFragShader"),
+			side: THREE.FrontSide,
+			transparent: true
+		});
+
 		this.scene.start("MainScene");
 
 		/**
