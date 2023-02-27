@@ -25,5 +25,6 @@ const config : Phaser.Types.Core.GameConfig = {
 
 window.addEventListener("load", () => 
 {
-	enable3d(() => new Phaser.Game(config)).withPhysics("/assets/ammo");
+	// If the string attached to "withPhysics()" has a '/' in front it will BREAK WEBPACK!
+	enable3d(() => new Phaser.Game(config)).withPhysics("assets/ammo");
 });
